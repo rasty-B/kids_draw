@@ -1,0 +1,189 @@
+════════════════════════════════════════════════════════════════
+COMPLETE FILE LISTING - Android MVP Coloring App
+════════════════════════════════════════════════════════════════
+
+ROOT DIRECTORY
+├── .gitignore                                  [Android gitignore patterns]
+├── README.md                                   [Project documentation - 279 lines]
+├── BUILD_INSTRUCTIONS.md                       [Build guide - 177 lines]
+├── IMPLEMENTATION_SUMMARY.md                   [Handoff doc - 390 lines]
+├── build.gradle                                [Root build config]
+├── settings.gradle                             [Gradle settings]
+├── gradle.properties                           [Gradle JVM args]
+└── gradle/
+    └── wrapper/
+        └── gradle-wrapper.properties           [Gradle 8.2]
+
+APP MODULE (app/)
+├── build.gradle                                [App dependencies & config]
+├── proguard-rules.pro                          [ProGuard rules]
+└── src/main/
+    ├── AndroidManifest.xml                     [App manifest]
+    ├── java/com/brett/coloringkids/
+    │   ├── ui/
+    │   │   ├── MainActivity.kt                 [Entry activity - 15 lines]
+    │   │   ├── DrawingFragment.kt              [Main UI - 198 lines]
+    │   │   ├── DrawingViewModel.kt             [ViewModel - 91 lines]
+    │   │   └── views/
+    │   │       └── DrawingView.kt              [Custom canvas - 256 lines]
+    │   ├── domain/model/
+    │   │   ├── Tool.kt                         [Pen/Eraser enum - 6 lines]
+    │   │   ├── Stroke.kt                       [Path data - 9 lines]
+    │   │   └── CanvasState.kt                  [State holder - 11 lines]
+    │   ├── data/
+    │   │   ├── ImageRepository.kt              [Image loading - 59 lines]
+    │   │   └── ExportRepository.kt             [Save to gallery - 57 lines]
+    │   └── util/
+    │       └── BitmapUtils.kt                  [Layer flatten - 26 lines]
+    └── res/
+        ├── drawable/
+        │   └── ic_launcher_foreground.xml      [App icon foreground]
+        ├── layout/
+        │   ├── activity_main.xml               [Main container]
+        │   └── fragment_drawing.xml            [UI layout - 183 lines]
+        ├── mipmap-anydpi-v26/
+        │   ├── ic_launcher.xml                 [Adaptive icon]
+        │   └── ic_launcher_round.xml           [Round icon]
+        └── values/
+            ├── colors.xml                      [Color palette]
+            ├── strings.xml                     [Localized strings]
+            ├── themes.xml                      [Material theme]
+            └── ic_launcher_background.xml      [Icon background]
+
+════════════════════════════════════════════════════════════════
+FILE COUNT: 30 FILES
+════════════════════════════════════════════════════════════════
+
+BREAKDOWN BY TYPE:
+  Kotlin Source:        12 files  (~613 LOC)
+  XML Resources:        10 files  (~350 LOC)
+  Build Config:          5 files  (~100 LOC)
+  Documentation:         3 files  (~600 LOC)
+
+TOTAL LINES OF CODE: ~1,763
+
+════════════════════════════════════════════════════════════════
+KEY FILES FOR REVIEW:
+════════════════════════════════════════════════════════════════
+
+1. DrawingView.kt (256 lines)
+   - Core drawing logic with pan/zoom/undo
+   - Matrix-based coordinate transformation
+   - Gesture detection (pinch, pan, double-tap)
+   - Two-layer rendering system
+
+2. DrawingFragment.kt (198 lines)
+   - UI event handling
+   - ViewModel observation
+   - Tool selection and color palette
+   - Import/export coordination
+
+3. fragment_drawing.xml (183 lines)
+   - Material toolbar
+   - Custom DrawingView
+   - Control buttons (Import, Undo, Redo, Save)
+   - Tool toggles (Pen/Eraser)
+   - Brush size slider
+   - 8-color palette
+
+4. DrawingViewModel.kt (91 lines)
+   - StateFlow for reactive UI
+   - Image import logic
+   - Export coordination
+   - Tool/color/brush state
+
+5. ImageRepository.kt (59 lines)
+   - SAF-based image loading
+   - OOM protection (max 4096px)
+   - API 28+ ImageDecoder
+   - Fallback BitmapFactory
+
+6. ExportRepository.kt (57 lines)
+   - MediaStore API (scoped storage)
+   - PNG compression
+   - Timestamped filenames
+   - Pictures/ColoringKids/ path
+
+════════════════════════════════════════════════════════════════
+BUILD CONFIGURATION:
+════════════════════════════════════════════════════════════════
+
+Gradle:                8.2.0
+Android Gradle Plugin: 8.2.0
+Kotlin:                1.9.20
+
+Compile SDK:           35 (Android 15)
+Target SDK:            35
+Min SDK:               26 (Android 8.0)
+
+Dependencies:
+  - androidx.core:core-ktx:1.13.1
+  - androidx.appcompat:appcompat:1.7.0
+  - com.google.android.material:material:1.12.0
+  - androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4
+  - androidx.activity:activity-ktx:1.9.0
+  - androidx.fragment:fragment-ktx:1.8.1
+  - androidx.constraintlayout:constraintlayout:2.1.4
+
+════════════════════════════════════════════════════════════════
+ARCHITECTURE:
+════════════════════════════════════════════════════════════════
+
+Pattern: MVVM (Model-View-ViewModel)
+
+View Layer:
+  - MainActivity (container)
+  - DrawingFragment (UI logic)
+  - DrawingView (custom canvas)
+
+ViewModel Layer:
+  - DrawingViewModel (state + business logic)
+
+Model Layer:
+  - Tool, Stroke, CanvasState (domain models)
+
+Data Layer:
+  - ImageRepository (import images)
+  - ExportRepository (save images)
+
+Utils:
+  - BitmapUtils (layer flattening)
+
+════════════════════════════════════════════════════════════════
+TESTING GUIDE:
+════════════════════════════════════════════════════════════════
+
+Manual Testing Checklist:
+  [ ] Import 4MP image
+  [ ] Import 12MP image
+  [ ] Draw with pen (all 8 colors)
+  [ ] Erase strokes
+  [ ] Undo 10 times
+  [ ] Redo 5 times
+  [ ] Pinch zoom 2x
+  [ ] Pan while zoomed
+  [ ] Double-tap to fit
+  [ ] Change brush size
+  [ ] Save to gallery
+  [ ] Verify in Pictures/ColoringKids/
+  [ ] Rotate device
+  [ ] Background/resume app
+
+Performance Testing:
+  [ ] Draw 100+ strokes (no lag)
+  [ ] Undo 100+ strokes (< 1s each)
+  [ ] Zoom while drawing (smooth)
+  [ ] Load large image (no OOM)
+
+Edge Cases:
+  [ ] Save without image (error)
+  [ ] Import corrupted image
+  [ ] Rapid tool switching
+  [ ] Draw during zoom gesture
+
+════════════════════════════════════════════════════════════════
+Git repository: kids_draw
+Branch: claude/android-coloring-app-mvp-011CUh82WTjx2GdpgvGtEuRM
+Commits: 2
+Status: Clean working tree (all files committed)
+════════════════════════════════════════════════════════════════
