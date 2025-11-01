@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Coloring</string>
+    <string name="import_image">Import</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="save">Save</string>
+    <string name="pen">Pen</string>
+    <string name="eraser">Eraser</string>
+    <string name="brush_size">Size:</string>
+    <string name="colors">Colors</string>
+    <string name="image_saved">Image saved to Pictures/ColoringKids!</string>
+    <string name="image_save_failed">Failed to save image</string>
+    <string name="no_image_to_save">Please import an image first</string>
+</resources>
