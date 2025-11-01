@@ -183,94 +183,14 @@
             android:text="@string/colors"
             android:textSize="14sp" />
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/color_palette_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:id="@+id/color_black"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@android:color/black"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <View
-                android:id="@+id/color_red"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <View
-                android:id="@+id/color_blue"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <View
-                android:id="@+id/color_green"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_green_dark"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <View
-                android:id="@+id/color_yellow"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="#FFEB3B"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <View
-                android:id="@+id/color_orange"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_orange_dark"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <View
-                android:id="@+id/color_purple"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@android:color/holo_purple"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <View
-                android:id="@+id/color_brown"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="#795548"
-                android:clickable="true"
-                android:focusable="true" />
-
-        </LinearLayout>
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 

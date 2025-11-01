@@ -16,6 +16,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.brett.coloringkids.R
 import com.brett.coloringkids.databinding.FragmentDrawingBinding
 import com.brett.coloringkids.domain.model.Tool
+import com.brett.coloringkids.ui.adapters.ColorItem
+import com.brett.coloringkids.ui.adapters.ColorPaletteAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -25,6 +27,9 @@ class DrawingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: DrawingViewModel by viewModels()
+
+    private lateinit var colorPaletteAdapter: ColorPaletteAdapter
+    private var currentSelectedColor: Int = Color.BLACK
 
     private val imagePickerLauncher = registerForActivityResult(
         ActivityResultContracts.OpenDocument()
@@ -104,22 +109,39 @@ class DrawingFragment : Fragment() {
     }
 
     private fun setupColorPalette() {
-        val colorMap = mapOf(
-            binding.colorBlack to Color.BLACK,
-            binding.colorRed to Color.parseColor("#C62828"),
-            binding.colorBlue to Color.parseColor("#1976D2"),
-            binding.colorGreen to Color.parseColor("#388E3C"),
-            binding.colorYellow to Color.parseColor("#FFEB3B"),
-            binding.colorOrange to Color.parseColor("#F57C00"),
-            binding.colorPurple to Color.parseColor("#9C27B0"),
-            binding.colorBrown to Color.parseColor("#795548")
+        // Define available colors
+        val availableColors = listOf(
+            Color.BLACK,
+            Color.parseColor("#C62828"),      // Red
+            Color.parseColor("#1976D2"),      // Blue
+            Color.parseColor("#388E3C"),      // Green
+            Color.parseColor("#FFEB3B"),      // Yellow
+            Color.parseColor("#F57C00"),      // Orange
+            Color.parseColor("#9C27B0"),      // Purple
+            Color.parseColor("#795548")       // Brown
         )
 
-        colorMap.forEach { (view, color) ->
-            view.setOnClickListener {
-                viewModel.setColor(color)
-            }
+        // Initialize adapter
+        colorPaletteAdapter = ColorPaletteAdapter { selectedColor ->
+            currentSelectedColor = selectedColor
+            viewModel.setColor(selectedColor)
+            updateColorPalette(availableColors)
         }
+
+        binding.colorPaletteRecycler.adapter = colorPaletteAdapter
+
+        // Set initial palette state
+        updateColorPalette(availableColors)
+    }
+
+    private fun updateColorPalette(availableColors: List<Int>) {
+        val colorItems = availableColors.map { color ->
+            ColorItem(
+                color = color,
+                isSelected = color == currentSelectedColor
+            )
+        }
+        colorPaletteAdapter.submitList(colorItems)
     }
 
     private fun observeViewModel() {
